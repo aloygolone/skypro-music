@@ -24,6 +24,12 @@
   cursor: pointer;
 }
 
+.activeFilter {
+  border-color: #ad61ff;
+  color: #ad61ff;
+  cursor: pointer;
+}
+
 .listContainer {
   width: 248px;
   height: auto;

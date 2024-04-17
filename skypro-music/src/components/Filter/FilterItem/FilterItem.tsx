@@ -14,7 +14,7 @@ export default function FilterItem({
         <div>
           <div
             onClick={() => handleFilterClick(title)}
-            className={classNames(styles.filterButton, styles.btnText)}
+            className={classNames(styles.filterButton, styles.activeFilter)}
           >
             {title}
           </div>
