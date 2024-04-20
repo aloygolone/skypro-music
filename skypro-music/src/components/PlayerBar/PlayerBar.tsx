@@ -15,6 +15,7 @@ type PlayerBarType = {
 export default function PlayerBar({ track }: PlayerBarType) {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [volume, setVolume] = useState<number>(0.5);
   const audioRef = useRef<null | HTMLAudioElement>(null);
 
   const duration = audioRef.current?.duration || 0;
@@ -24,6 +25,12 @@ export default function PlayerBar({ track }: PlayerBarType) {
       audioRef.current.play();
     }
   });
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
 
   useEffect(() => {
     if (currentTime === duration && duration !== 0) {
@@ -49,6 +56,13 @@ export default function PlayerBar({ track }: PlayerBarType) {
     }
   };
 
+  const handleVolume = (event: ChangeEvent<HTMLInputElement>) => {
+    if (audioRef.current) {
+      audioRef.current.volume = Number(event.target.value);
+      setVolume(audioRef.current.volume);
+    }
+  };
+
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>
@@ -67,9 +81,15 @@ export default function PlayerBar({ track }: PlayerBarType) {
         <div className={styles.barPlayerBlock}>
           <div className={styles.barPlayer}>
             <PlayerControls togglePlay={togglePlay} isPlaying={isPlaying} />
-            <PlayerTrackNow track={track}/>
+            <PlayerTrackNow track={track} />
           </div>
-          <VolumeBar />
+          <VolumeBar
+            min={0}
+            max={1}
+            step={0.01}
+            value={volume}
+            onChange={handleVolume}
+          />
         </div>
       </div>
     </div>

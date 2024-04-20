@@ -40,3 +40,11 @@ export type PlayerControlsType = {
   togglePlay: () => void;
   isPlaying: boolean;
 };
+
+export type VolumeType = {
+  min: number;
+  max: number;
+  step: number;
+  value: number;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+};
