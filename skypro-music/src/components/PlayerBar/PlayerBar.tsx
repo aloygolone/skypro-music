@@ -16,28 +16,22 @@ export default function PlayerBar({ track }: PlayerBarType) {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [volume, setVolume] = useState<number>(0.5);
+  const [isLooping, setIsLooping] = useState<boolean>(false);
   const audioRef = useRef<null | HTMLAudioElement>(null);
 
   const duration = audioRef.current?.duration || 0;
 
   useEffect(() => {
-    if (audioRef.current && isPlaying) {
-      audioRef.current.play();
-    }
-  });
-
-  useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
+      audioRef.current.play();
+      setIsPlaying(true);
     }
-  }, [volume]);
-
-  useEffect(() => {
-    if (currentTime === duration && duration !== 0) {
-      audioRef.current?.pause();
+    audioRef.current?.addEventListener("ended", () => {
       setIsPlaying(false);
-    }
-  }, [setIsPlaying, currentTime, duration]);
+      setCurrentTime(0);
+    });
+  }, [volume, duration]);
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -48,6 +42,17 @@ export default function PlayerBar({ track }: PlayerBarType) {
       }
       setIsPlaying((prev) => !prev);
     }
+  };
+
+  const toggleLoop = () => {
+    if (audioRef.current) {
+      if (isLooping) {
+        audioRef.current.loop = false;
+      } else {
+        audioRef.current.loop = true;
+      }
+    }
+    setIsLooping((prev) => !prev);
   };
 
   const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
@@ -71,6 +76,11 @@ export default function PlayerBar({ track }: PlayerBarType) {
           ref={audioRef}
           onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
         />
+        <div className={styles.trackTimeBlock}>
+          <div>{currentTime}</div>
+          <div> / </div>
+          <div>{duration}</div>
+        </div>
         <div className={styles.barPlayerProgress} />
         <ProgressBar
           max={duration}
@@ -80,7 +90,12 @@ export default function PlayerBar({ track }: PlayerBarType) {
         />
         <div className={styles.barPlayerBlock}>
           <div className={styles.barPlayer}>
-            <PlayerControls togglePlay={togglePlay} isPlaying={isPlaying} />
+            <PlayerControls
+              togglePlay={togglePlay}
+              isPlaying={isPlaying}
+              toggleLoop={toggleLoop}
+              isLooping={isLooping}
+            />
             <PlayerTrackNow track={track} />
           </div>
           <VolumeBar

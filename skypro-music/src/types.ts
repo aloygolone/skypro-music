@@ -39,6 +39,8 @@ export type ProgressType = {
 export type PlayerControlsType = {
   togglePlay: () => void;
   isPlaying: boolean;
+  isLooping: boolean;
+  toggleLoop: () => void;
 };
 
 export type VolumeType = {

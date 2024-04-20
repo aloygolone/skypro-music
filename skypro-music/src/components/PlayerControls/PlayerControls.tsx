@@ -4,6 +4,8 @@ import styles from "./PlayerControls.module.css";
 export default function PlayerControls({
   togglePlay,
   isPlaying,
+  isLooping,
+  toggleLoop,
 }: PlayerControlsType) {
   return (
     <div className={styles.playerControls}>
@@ -26,9 +28,13 @@ export default function PlayerControls({
           <use xlinkHref="/img/icon/sprite.svg#icon-next" />
         </svg>
       </div>
-      <div className="player__btn-repeat _btn-icon">
+      <div onClick={toggleLoop} className="player__btn-repeat _btn-icon">
         <svg className={styles.playerBtnRepeatSvg}>
-          <use xlinkHref="/img/icon/sprite.svg#icon-repeat" />
+        <use
+            xlinkHref={`/img/icon/sprite.svg#${
+              isLooping ? "icon-repeat-toggled" : "icon-repeat"
+            }`}
+          />
         </svg>
       </div>
       <div className="player__btn-shuffle _btn-icon">
