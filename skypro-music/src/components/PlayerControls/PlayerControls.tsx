@@ -1,6 +1,10 @@
+import { PlayerControlsType } from "@/types";
 import styles from "./PlayerControls.module.css";
 
-export default function PlayerControls() {
+export default function PlayerControls({
+  togglePlay,
+  isPlaying,
+}: PlayerControlsType) {
   return (
     <div className={styles.playerControls}>
       <div className="player__btn-prev">
@@ -8,9 +12,13 @@ export default function PlayerControls() {
           <use xlinkHref="/img/icon/sprite.svg#icon-prev" />
         </svg>
       </div>
-      <div className="player__btn-play _btn">
+      <div onClick={togglePlay} className="player__btn-play _btn">
         <svg className={styles.playerBtnPlaySvg}>
-          <use xlinkHref="/img/icon/sprite.svg#icon-play" />
+          <use
+            xlinkHref={`/img/icon/sprite.svg#${
+              isPlaying ? "icon-pause" : "icon-play"
+            }`}
+          />
         </svg>
       </div>
       <div className="player__btn-next">

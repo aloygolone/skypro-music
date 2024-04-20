@@ -99,6 +99,7 @@
 }
 
 .trackPlayLikeSvg {
+  margin-left: 10px;
   width: 14px;
   height: 12px;
   fill: transparent;

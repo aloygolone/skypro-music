@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export type FilterItemType = {
   title: string;
   list: string[];
@@ -24,4 +26,17 @@ export type TrackType = {
   logo: string | null;
   track_file: string;
   stared_user: UserType[];
+  onClick: () => void;
+};
+
+export type ProgressType = {
+  max: number;
+  value: number;
+  step: number;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+};
+
+export type PlayerControlsType = {
+  togglePlay: () => void;
+  isPlaying: boolean;
 };
