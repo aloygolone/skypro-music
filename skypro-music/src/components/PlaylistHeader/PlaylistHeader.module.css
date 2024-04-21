@@ -26,20 +26,21 @@
 }
 
 .column01 {
-  width: 447px;
+  width: 437px;
 }
 
 .column02 {
-  width: 321px;
+  width: 301px;
 }
 
 .column03 {
-  width: 245px;
+  width: 255px;
 }
 
 .column04 {
-  width: 60px;
+  width: 32px;
   text-align: end;
+  margin-right: 28px;
 }
 
 .playlistTitleSvg {

@@ -7,6 +7,7 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import VolumeBar from "../VolumeBar/VolumeBar";
 import styles from "./PlayerBar.module.css";
 import { TrackType } from "@/types";
+import { durationFormat } from "@/utils";
 
 type PlayerBarType = {
   track: TrackType;
@@ -77,9 +78,9 @@ export default function PlayerBar({ track }: PlayerBarType) {
           onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
         />
         <div className={styles.trackTimeBlock}>
-          <div>{currentTime}</div>
+          <div>{durationFormat(currentTime)}</div>
           <div> / </div>
-          <div>{duration}</div>
+          <div>{durationFormat(duration)}</div>
         </div>
         <div className={styles.barPlayerProgress} />
         <ProgressBar

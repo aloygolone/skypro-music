@@ -78,7 +78,7 @@
 }
 
 .trackAuthor {
-  width: 321px;
+  width: 300px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -97,7 +97,11 @@
 }
 
 .trackAlbum {
-  width: 245px;
+  width: 235px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #696969;
 }
 
 .trackAlbumLink {
@@ -126,5 +130,5 @@
   line-height: 24px;
   text-align: right;
   color: #696969;
-  margin-right: 24px;
+  margin-right: 12px;
 }

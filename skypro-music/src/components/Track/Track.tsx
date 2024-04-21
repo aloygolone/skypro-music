@@ -1,5 +1,6 @@
 import { TrackType } from "@/types";
 import styles from "./Track.module.css";
+import { durationFormat } from "@/utils";
 
 export default function Track({ name, author, album, duration_in_seconds, onClick }: TrackType) {
   return (
@@ -31,7 +32,7 @@ export default function Track({ name, author, album, duration_in_seconds, onClic
           <svg className={styles.trackTimeSvg}>
             <use xlinkHref="img/icon/sprite.svg#icon-like" />
           </svg>
-          <span className={styles.trackTimeText}>{duration_in_seconds}</span>
+          <span className={styles.trackTimeText}>{durationFormat(duration_in_seconds)}</span>
         </div>
       </div>
     </div>
