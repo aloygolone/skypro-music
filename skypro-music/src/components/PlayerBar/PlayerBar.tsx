@@ -82,7 +82,6 @@ export default function PlayerBar({ track }: PlayerBarType) {
           <div> / </div>
           <div>{durationFormat(duration)}</div>
         </div>
-        <div className={styles.barPlayerProgress} />
         <ProgressBar
           max={duration}
           value={currentTime}
