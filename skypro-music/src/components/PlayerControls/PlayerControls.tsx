@@ -1,6 +1,12 @@
+import { PlayerControlsType } from "@/types";
 import styles from "./PlayerControls.module.css";
 
-export default function PlayerControls() {
+export default function PlayerControls({
+  togglePlay,
+  isPlaying,
+  isLooping,
+  toggleLoop,
+}: PlayerControlsType) {
   return (
     <div className={styles.playerControls}>
       <div className="player__btn-prev">
@@ -8,9 +14,13 @@ export default function PlayerControls() {
           <use xlinkHref="/img/icon/sprite.svg#icon-prev" />
         </svg>
       </div>
-      <div className="player__btn-play _btn">
+      <div onClick={togglePlay} className="player__btn-play _btn">
         <svg className={styles.playerBtnPlaySvg}>
-          <use xlinkHref="/img/icon/sprite.svg#icon-play" />
+          <use
+            xlinkHref={`/img/icon/sprite.svg#${
+              isPlaying ? "icon-pause" : "icon-play"
+            }`}
+          />
         </svg>
       </div>
       <div className="player__btn-next">
@@ -18,9 +28,13 @@ export default function PlayerControls() {
           <use xlinkHref="/img/icon/sprite.svg#icon-next" />
         </svg>
       </div>
-      <div className="player__btn-repeat _btn-icon">
+      <div onClick={toggleLoop} className="player__btn-repeat _btn-icon">
         <svg className={styles.playerBtnRepeatSvg}>
-          <use xlinkHref="/img/icon/sprite.svg#icon-repeat" />
+        <use
+            xlinkHref={`/img/icon/sprite.svg#${
+              isLooping ? "icon-repeat-toggled" : "icon-repeat"
+            }`}
+          />
         </svg>
       </div>
       <div className="player__btn-shuffle _btn-icon">

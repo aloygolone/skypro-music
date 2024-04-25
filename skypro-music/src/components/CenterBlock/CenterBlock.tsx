@@ -5,14 +5,29 @@ import Search from "../Search/Search";
 import Track from "../Track/Track";
 import styles from "./CenterBlock.module.css";
 import { TrackType } from "@/types";
+import { useEffect, useState } from "react";
 
-export default async function CenterBlock() {
-  let tracksData: TrackType[];
-  try {
-    tracksData = await getTracks();
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
+type PlaylistType = {
+  setTrack: (param: TrackType) => void;
+};
+
+export default function CenterBlock({ setTrack }: PlaylistType) {
+  // let tracksData: TrackType[];
+  // try {
+  //   tracksData = await getTracks();
+  // } catch (error: any) {
+  //   throw new Error(error.message);
+  // }
+
+  const [tracksData, setTracksData] = useState<TrackType[]>([]);
+  useEffect(() => {
+    getTracks()
+      .then((data: TrackType[]) => setTracksData(data))
+      .catch((error: any) => {
+        throw new Error(error.message);
+      });
+  }, []);
+
   return (
     <div className={styles.mainCenterblock}>
       <Search />
@@ -23,6 +38,7 @@ export default async function CenterBlock() {
         <div className={styles.contentPlaylist}>
           {tracksData.map((trackData) => (
             <Track
+              onClick={() => setTrack(trackData)}
               key={trackData.id}
               id={trackData.id}
               name={trackData.name}
