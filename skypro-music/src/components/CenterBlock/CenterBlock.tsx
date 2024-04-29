@@ -5,29 +5,14 @@ import Search from "../Search/Search";
 import Track from "../Track/Track";
 import styles from "./CenterBlock.module.css";
 import { TrackType } from "@/types";
-import { useEffect, useState } from "react";
 
-type PlaylistType = {
-  setTrack: (param: TrackType) => void;
-};
-
-export default function CenterBlock({ setTrack }: PlaylistType) {
-  // let tracksData: TrackType[];
-  // try {
-  //   tracksData = await getTracks();
-  // } catch (error: any) {
-  //   throw new Error(error.message);
-  // }
-
-  const [tracksData, setTracksData] = useState<TrackType[]>([]);
-  useEffect(() => {
-    getTracks()
-      .then((data: TrackType[]) => setTracksData(data))
-      .catch((error: any) => {
-        throw new Error(error.message);
-      });
-  }, []);
-
+export default async function CenterBlock() {
+  let tracksData: TrackType[];
+  try {
+    tracksData = await getTracks();
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
   return (
     <div className={styles.mainCenterblock}>
       <Search />
@@ -36,21 +21,8 @@ export default function CenterBlock({ setTrack }: PlaylistType) {
       <div className={styles.centerblockContent}>
         <PlaylistHeader />
         <div className={styles.contentPlaylist}>
-          {tracksData.map((trackData) => (
-            <Track
-              onClick={() => setTrack(trackData)}
-              key={trackData.id}
-              id={trackData.id}
-              name={trackData.name}
-              author={trackData.author}
-              release_date={trackData.release_date}
-              genre={trackData.genre}
-              duration_in_seconds={trackData.duration_in_seconds}
-              album={trackData.album}
-              logo={trackData.logo}
-              track_file={trackData.track_file}
-              stared_user={trackData.stared_user}
-            />
+          {tracksData.map((track) => (
+            <Track key={track.id} track={track} tracksData={tracksData} />
           ))}
         </div>
       </div>

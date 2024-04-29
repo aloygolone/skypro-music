@@ -1,10 +1,24 @@
+'use client'
+
 import { TrackType } from "@/types";
 import styles from "./Track.module.css";
 import { durationFormat } from "@/utils";
+import { useAppDispatch } from "@/hooks";
+import { setCurrentTrack } from "@/store/features/playlistSlice";
 
-export default function Track({ name, author, album, duration_in_seconds, onClick }: TrackType) {
+type PlaylistType = {
+  track: TrackType;
+  tracksData: TrackType[];
+};
+
+export default function Track({ track, tracksData }: PlaylistType) {
+  const { name, author, album, duration_in_seconds } = track;
+  const dispatch = useAppDispatch();
   return (
-    <div onClick={onClick} className={styles.playlistItem}>
+    <div
+      onClick={() => dispatch(setCurrentTrack(track))}
+      className={styles.playlistItem}
+    >
       <div className={styles.playlistTrack}>
         <div className={styles.trackTitle}>
           <div className={styles.trackTitleImage}>
@@ -19,20 +33,18 @@ export default function Track({ name, author, album, duration_in_seconds, onClic
           </div>
         </div>
         <div className={styles.trackAuthor}>
-          <span className={styles.trackAuthorLink}>
-            {author}
-          </span>
+          <span className={styles.trackAuthorLink}>{author}</span>
         </div>
         <div className={styles.trackAlbum}>
-          <span className={styles.trackAlbumLink}>
-            {album}
-          </span>
+          <span className={styles.trackAlbumLink}>{album}</span>
         </div>
         <div className={styles.trackTime}>
           <svg className={styles.trackTimeSvg}>
             <use xlinkHref="img/icon/sprite.svg#icon-like" />
           </svg>
-          <span className={styles.trackTimeText}>{durationFormat(duration_in_seconds)}</span>
+          <span className={styles.trackTimeText}>
+            {durationFormat(duration_in_seconds)}
+          </span>
         </div>
       </div>
     </div>
