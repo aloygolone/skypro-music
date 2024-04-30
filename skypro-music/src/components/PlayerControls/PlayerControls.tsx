@@ -2,6 +2,7 @@ import { PlayerControlsType } from "@/types";
 import styles from "./PlayerControls.module.css";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
+  setIsPlaying,
   setIsShuffle,
   setNextTrack,
   setPreviousTrack,
@@ -17,9 +18,11 @@ export default function PlayerControls({
   const dispatch = useAppDispatch();
   const HandleNextTrack = () => {
     dispatch(setNextTrack());
+    dispatch(setIsPlaying(true));
   };
   const HandlePreviousTrack = () => {
     dispatch(setPreviousTrack());
+    dispatch(setIsPlaying(true));
   };
   const HandleShuffle = () => {
     if (isShuffle) {
@@ -61,7 +64,11 @@ export default function PlayerControls({
       </div>
       <div onClick={HandleShuffle} className="player__btn-shuffle _btn-icon">
         <svg className={styles.playerBtnShuffleSvg}>
-          <use xlinkHref={`/img/icon/sprite.svg#${isShuffle ? "icon-shuffle-toggled" : "icon-shuffle"}`} />
+          <use
+            xlinkHref={`/img/icon/sprite.svg#${
+              isShuffle ? "icon-shuffle-toggled" : "icon-shuffle"
+            }`}
+          />
         </svg>
       </div>
     </div>
