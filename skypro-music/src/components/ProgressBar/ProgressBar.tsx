@@ -1,12 +1,8 @@
 import { ProgressType } from "@/types";
 import styles from "./ProgressBar.module.css";
+import React from "react";
 
-export default function ProgressBar({
-  max,
-  value,
-  step,
-  onChange,
-}: ProgressType) {
+const ProgressBar = React.memo(({ max, value, step, onChange }: ProgressType) => {
   return (
     <input
       className={styles.styledProgressInput}
@@ -18,4 +14,7 @@ export default function ProgressBar({
       onChange={onChange}
     />
   );
-}
+});
+
+ProgressBar.displayName = "ProgressBar"
+export default ProgressBar;

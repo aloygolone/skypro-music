@@ -1,25 +1,21 @@
-export const filters = [
+type FilterType = {
+  title: string;
+  value: "author" | "genre" | "order";
+};
+
+export const filters: FilterType[] = [
   {
     title: "Исполнителю",
-    list: [
-      "ivan",
-      "petya",
-      "ivan",
-      "petya",
-      "ivan",
-      "petya",
-      "ivan",
-      "petya",
-      "ivan",
-      "petya",
-    ],
-  },
-  {
-    title: "Году выпуска",
-    list: ["2000", "2001"],
+    value: "author",
   },
   {
     title: "Жанру",
-    list: ["рок", "рэп"],
+    value: "genre",
+  },
+  {
+    title: "Году выпуска",
+    value: "order",
   },
 ];
+
+export const order = ["По умолчанию", "Сначала новые", "Сначала старые"];
