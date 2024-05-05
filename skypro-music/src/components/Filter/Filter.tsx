@@ -5,11 +5,15 @@ import FilterItem from "./FilterItem/FilterItem";
 import { useState } from "react";
 import { filters } from "./data";
 import { TrackType } from "@/types";
+import { useAppDispatch } from "@/hooks";
+import { setFilters } from "@/store/features/playlistSlice";
 
 export default function Filter({ tracksData }: { tracksData: TrackType[] }) {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
   function handleFilterClick(newFilter: string) {
     setActiveFilter((prev) => (prev === newFilter ? null : newFilter));
+    dispatch(setFilters({ author: [], genre: [] }));
   }
   return (
     <div className={styles.centerblockFilter}>
