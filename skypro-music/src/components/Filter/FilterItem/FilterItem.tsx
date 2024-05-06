@@ -5,7 +5,7 @@ import styles from "./FilterItem.module.css";
 import { FilterItemType, TrackType } from "@/types";
 import { orderList } from "../data";
 import { useAppDispatch } from "@/hooks";
-import { setFilters } from "@/store/features/playlistSlice";
+import { setFilters, setInitialTracks } from "@/store/features/playlistSlice";
 import { useEffect, useState } from "react";
 
 export default function FilterItem({
@@ -17,6 +17,7 @@ export default function FilterItem({
   tracksData,
 }: FilterItemType) {
   const [filterNumber, SetFilterNumber] = useState<number>(0);
+  const date = new Date()
 
   const dispatch = useAppDispatch();
 
@@ -39,8 +40,33 @@ export default function FilterItem({
           : [...list, item],
       })
     );
+    if (orderList && orderList.filter((item) => item === "Сначала новые")) {
+      dispatch(
+        setInitialTracks({
+          initialTracks: tracksData?.sort(
+            (a, b) => new Date(a.release_date) - new Date(b.release_date)
+          ),
+        })
+      );
+    } else if (
+      orderList &&
+      orderList.filter((item) => item === "Сначала старые")
+    ) {
+      dispatch(
+        setInitialTracks({
+          initialTracks: tracksData?.sort(
+            (a, b) => 
+          ),
+        })
+      );
+    } else {
+      dispatch(
+        setInitialTracks({
+          initialTracks: tracksData,
+        })
+      );
+    }
   };
-
 
   useEffect(() => {
     SetFilterNumber(list.length || list.length);

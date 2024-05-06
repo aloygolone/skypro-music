@@ -5,10 +5,13 @@ import FilterItem from "./FilterItem/FilterItem";
 import { useState } from "react";
 import { filters, orderList } from "./data";
 import { TrackType } from "@/types";
-import { useAppSelector } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { setFilters, setInitialTracks } from "@/store/features/playlistSlice";
 
 export default function Filter({ tracksData }: { tracksData: TrackType[] }) {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+
   const authorsList = useAppSelector(
     (state) => state.playlist.filterOptions.author
   );
@@ -17,6 +20,10 @@ export default function Filter({ tracksData }: { tracksData: TrackType[] }) {
   );
 
   function handleFilterClick(newFilter: string) {
+    if (newFilter !== activeFilter) {
+      dispatch(setInitialTracks({ initialTracks: tracksData }));
+      dispatch(setFilters({ author: [], genre: [] }));
+    }
     setActiveFilter((prev) => (prev === newFilter ? null : newFilter));
   }
 
