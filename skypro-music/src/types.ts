@@ -6,6 +6,7 @@ export type FilterItemType = {
   handleFilterClick: (newFilter: string) => void;
   isOpened: boolean;
   tracksData: TrackType[];
+  list: string[];
 };
 
 type UserType = {

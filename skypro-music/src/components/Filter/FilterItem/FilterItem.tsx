@@ -3,8 +3,8 @@
 import classNames from "classnames";
 import styles from "./FilterItem.module.css";
 import { FilterItemType, TrackType } from "@/types";
-import { order } from "../data";
-import { useAppDispatch, useAppSelector } from "@/hooks";
+import { orderList } from "../data";
+import { useAppDispatch } from "@/hooks";
 import { setFilters } from "@/store/features/playlistSlice";
 import { useEffect, useState } from "react";
 
@@ -13,16 +13,13 @@ export default function FilterItem({
   title,
   value,
   isOpened,
+  list,
   tracksData,
 }: FilterItemType) {
   const [filterNumber, SetFilterNumber] = useState<number>(0);
-  const authorsList = useAppSelector(
-    (state) => state.playlist.filterOptions.author
-  );
-  const genreList = useAppSelector(
-    (state) => state.playlist.filterOptions.genre
-  );
+
   const dispatch = useAppDispatch();
+
   const getFilterList = () => {
     if (value !== "order") {
       const array = new Set(
@@ -31,25 +28,23 @@ export default function FilterItem({
       return Array.from(array);
     }
 
-    return order;
+    return orderList;
   };
 
   const toggleFilter = (item: string) => {
     dispatch(
       setFilters({
-        author: authorsList.includes(item)
-          ? authorsList.filter((el) => el !== item)
-          : [...authorsList, item],
-        genre: genreList.includes(item)
-          ? genreList.filter((el) => el !== item)
-          : [...genreList, item],
+        [value]: list.includes(item)
+          ? list.filter((el) => el !== item)
+          : [...list, item],
       })
     );
   };
 
+
   useEffect(() => {
-    SetFilterNumber(authorsList.length || genreList.length);
-  }, [authorsList.length, genreList.length]);
+    SetFilterNumber(list.length || list.length);
+  }, [list]);
 
   getFilterList();
   return (
@@ -76,8 +71,7 @@ export default function FilterItem({
                   }}
                   key={item}
                   className={classNames(styles.listText, {
-                    [styles.listTextSelected]:
-                      authorsList.includes(item) || genreList.includes(item),
+                    [styles.listTextSelected]: list.includes(item),
                   })}
                 >
                   {item}
