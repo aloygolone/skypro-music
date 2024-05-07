@@ -5,7 +5,7 @@ import styles from "./FilterItem.module.css";
 import { FilterItemType, TrackType } from "@/types";
 import { orderList } from "../data";
 import { useAppDispatch } from "@/hooks";
-import { setFilters, setInitialTracks } from "@/store/features/playlistSlice";
+import { setFilters } from "@/store/features/playlistSlice";
 import { useEffect, useState } from "react";
 
 export default function FilterItem({
@@ -16,10 +16,8 @@ export default function FilterItem({
   list,
   tracksData,
 }: FilterItemType) {
-  const [filterNumber, SetFilterNumber] = useState<number>(0);
-  const date = new Date()
-
   const dispatch = useAppDispatch();
+  const [filterNumber, SetFilterNumber] = useState<number>(0);
 
   const getFilterList = () => {
     if (value !== "order") {
@@ -40,37 +38,38 @@ export default function FilterItem({
           : [...list, item],
       })
     );
-    if (orderList && orderList.filter((item) => item === "Сначала новые")) {
-      dispatch(
-        setInitialTracks({
-          initialTracks: tracksData?.sort(
-            (a, b) => new Date(a.release_date) - new Date(b.release_date)
-          ),
-        })
-      );
-    } else if (
-      orderList &&
-      orderList.filter((item) => item === "Сначала старые")
-    ) {
-      dispatch(
-        setInitialTracks({
-          initialTracks: tracksData?.sort(
-            (a, b) => 
-          ),
-        })
-      );
-    } else {
-      dispatch(
-        setInitialTracks({
-          initialTracks: tracksData,
-        })
-      );
-    }
+
+    // if (orderList && orderList.filter((item) => item === "Сначала новые")) {
+    //   dispatch(
+    //     setInitialTracks({
+    //       initialTracks: tracksData?.sort(
+    //         (a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime()
+    //       ),
+    //     })
+    //   );
+    // } else if (
+    //   orderList &&
+    //   orderList.filter((item) => item === "Сначала старые")
+    // ) {
+    //   dispatch(
+    //     setInitialTracks({
+    //       initialTracks: tracksData?.sort(
+    //         (a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime()
+    //       ),
+    //     })
+    //   );
+    // } else {
+    //   dispatch(
+    //     setInitialTracks({
+    //       initialTracks: tracksData,
+    //     })
+    //   );
+    // }
   };
 
   useEffect(() => {
-    SetFilterNumber(list.length || list.length);
-  }, [list]);
+    SetFilterNumber(list.length);
+  }, [list.length]);
 
   getFilterList();
   return (
@@ -80,7 +79,11 @@ export default function FilterItem({
           <div className={styles.titleFilterBox}>
             <div
               onClick={() => handleFilterClick(title)}
-              className={classNames(styles.filterButton, styles.activeFilter)}
+              className={classNames(
+                styles.filterButton,
+                styles.activeFilter,
+                styles.btnText
+              )}
             >
               {title}
             </div>
@@ -107,11 +110,16 @@ export default function FilterItem({
           </div>
         </div>
       ) : (
-        <div
-          onClick={() => handleFilterClick(title)}
-          className={classNames(styles.filterButton, styles.btnText)}
-        >
-          {title}
+        <div className={styles.titleFilterBox}>
+          <div
+            onClick={() => handleFilterClick(title)}
+            className={classNames(styles.filterButton, styles.btnText)}
+          >
+            {title}
+          </div>
+          {filterNumber > 0 ? (
+            <div className={styles.filterNumber}>{filterNumber}</div>
+          ) : null}
         </div>
       )}
     </>

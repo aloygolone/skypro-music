@@ -36,11 +36,11 @@
   cursor: pointer;
 }
 
-.btnText:active {
+/* .btnText:active {
   border-color: #ad61ff;
   color: #ad61ff;
   cursor: pointer;
-}
+} */
 
 .activeFilter {
   border-color: #ad61ff;
@@ -82,7 +82,7 @@
 
 .listTextSelected {
   text-decoration: underline;
-  color: #B672FF;
+  color: #b672ff;
 }
 
 .listText:hover {
