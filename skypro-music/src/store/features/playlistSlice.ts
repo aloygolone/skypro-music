@@ -11,7 +11,7 @@ type playlistStateType = {
   filterOptions: {
     author: string[];
     genre: string[];
-    release_date: string[];
+    release_date: string;
     searchValue: string;
   };
   filteredTracks: TrackType[];
@@ -27,7 +27,7 @@ const initialState: playlistStateType = {
   filterOptions: {
     author: [],
     genre: [],
-    release_date: [],
+    release_date: "",
     searchValue: "",
   },
   filteredTracks: [],
@@ -93,7 +93,7 @@ const playlistSlice = createSlice({
       action: PayloadAction<{
         author?: string[];
         genre?: string[];
-        release_date?: string[];
+        release_date?: string;
         searchValue?: string;
       }>
     ) => {
@@ -101,33 +101,46 @@ const playlistSlice = createSlice({
         genre: action.payload.genre || state.filterOptions.genre,
         author: action.payload.author || state.filterOptions.author,
         release_date:
-          orderList || state.filterOptions.release_date,
+        "По умолчанию" || "Сначала новые" || "Сначала старые"|| state.filterOptions.release_date,
         searchValue:
           action.payload.searchValue || state.filterOptions.searchValue,
       };
-      {
-        state.filterOptions.release_date
-          ? (
-            state.filteredTracks = state.initialTracks.sort(
-              (a, b) =>
-                new Date(b.release_date).getTime() -
-                new Date(a.release_date).getTime()
-            ))
-          : (state.filteredTracks = state.initialTracks.filter((track) => {
-              const hasAuthors = state.filterOptions.author.length !== 0;
-              const hasGenres = state.filterOptions.genre.length !== 0;
-              const isAuthors = hasAuthors
-                ? state.filterOptions.author.includes(track.author)
-                : true;
-              const isGenres = hasGenres
-                ? state.filterOptions.genre.includes(track.genre)
-                : true;
-              const hasSearchValue = track.name
-                .toLowerCase()
-                .includes(state.filterOptions.searchValue.toLowerCase());
-              return isAuthors && isGenres && hasSearchValue;
-            }));
+      let filteredArr = state.initialTracks.filter((track) => {
+        const hasAuthors = state.filterOptions.author.length !== 0;
+        const hasGenres = state.filterOptions.genre.length !== 0;
+        const isAuthors = hasAuthors
+          ? state.filterOptions.author.includes(track.author)
+          : true;
+        const isGenres = hasGenres
+          ? state.filterOptions.genre.includes(track.genre)
+          : true;
+        const hasSearchValue = track.name
+          .toLowerCase()
+          .includes(state.filterOptions.searchValue.toLowerCase());
+        return isAuthors && isGenres && hasSearchValue;
+      });
+
+      switch (state.filterOptions.release_date) {
+        case "Сначала новые":
+          filteredArr.sort(
+            (a, b) =>
+              new Date(b.release_date).getTime() -
+              new Date(a.release_date).getTime()
+          );
+          break;
+        case "Сначала старые":
+          filteredArr.sort(
+            (a, b) =>
+              new Date(a.release_date).getTime() -
+              new Date(b.release_date).getTime()
+          );
+
+          break;
+
+        default:
+          break;
       }
+      state.filteredTracks = filteredArr;
     },
   },
 });
