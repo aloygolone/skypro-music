@@ -52,9 +52,13 @@ export default function FilterItem({
     }
   };
 
-  useEffect(() => {
+  if (value !== "order") {useEffect(() => {
     SetFilterNumber(list.length);
-  }, [list]);
+  }, [list]);}
+
+  if (value === "order") {useEffect(() => {
+    orderList !== "" ? SetFilterNumber(1) : SetFilterNumber(0);
+  }, [orderList]);}
 
   getFilterList();
   return (
