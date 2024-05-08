@@ -3,7 +3,7 @@
 import styles from "./Filter.module.css";
 import FilterItem from "./FilterItem/FilterItem";
 import { useState } from "react";
-import { filters, orderList } from "./data";
+import { filters, order } from "./data";
 import { TrackType } from "@/types";
 import { useAppSelector } from "@/hooks";
 
@@ -23,7 +23,7 @@ export default function Filter({ tracksData }: { tracksData: TrackType[] }) {
     } else if (value === filters[1].title) {
       return genreList;
     } else {
-      return orderList;
+      return order;
     }
   };
 

@@ -3,8 +3,8 @@
 import classNames from "classnames";
 import styles from "./FilterItem.module.css";
 import { FilterItemType, TrackType } from "@/types";
-import { orderList } from "../data";
-import { useAppDispatch } from "@/hooks";
+import { order } from "../data";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setFilters } from "@/store/features/playlistSlice";
 import { useEffect, useState } from "react";
 
@@ -19,6 +19,10 @@ export default function FilterItem({
   const dispatch = useAppDispatch();
   const [filterNumber, SetFilterNumber] = useState<number>(0);
 
+  const orderList = useAppSelector(
+    (state) => state.playlist.filterOptions.order
+  );
+
   const getFilterList = () => {
     if (value !== "order") {
       const array = new Set(
@@ -27,7 +31,7 @@ export default function FilterItem({
       return Array.from(array);
     }
 
-    return orderList;
+    return order;
   };
 
   const toggleFilter = (item: string) => {
@@ -39,37 +43,18 @@ export default function FilterItem({
       })
     );
 
-    // if (orderList && orderList.filter((item) => item === "Сначала новые")) {
-    //   dispatch(
-    //     setInitialTracks({
-    //       initialTracks: tracksData?.sort(
-    //         (a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime()
-    //       ),
-    //     })
-    //   );
-    // } else if (
-    //   orderList &&
-    //   orderList.filter((item) => item === "Сначала старые")
-    // ) {
-    //   dispatch(
-    //     setInitialTracks({
-    //       initialTracks: tracksData?.sort(
-    //         (a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime()
-    //       ),
-    //     })
-    //   );
-    // } else {
-    //   dispatch(
-    //     setInitialTracks({
-    //       initialTracks: tracksData,
-    //     })
-    //   );
-    // }
+    if (list === order) {
+      dispatch(
+        setFilters({
+          [value]: item,
+        })
+      );
+    }
   };
 
   useEffect(() => {
     SetFilterNumber(list.length);
-  }, [list.length]);
+  }, [list]);
 
   getFilterList();
   return (
@@ -100,7 +85,10 @@ export default function FilterItem({
                   }}
                   key={item}
                   className={classNames(styles.listText, {
-                    [styles.listTextSelected]: list.includes(item),
+                    [styles.listTextSelected]:
+                      list === order
+                        ? orderList.includes(item)
+                        : list.includes(item),
                   })}
                 >
                   {item}

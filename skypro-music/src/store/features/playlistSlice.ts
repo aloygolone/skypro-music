@@ -1,4 +1,3 @@
-import { orderList } from "@/components/Filter/data";
 import { TrackType } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -11,7 +10,7 @@ type playlistStateType = {
   filterOptions: {
     author: string[];
     genre: string[];
-    release_date: string;
+    order: string;
     searchValue: string;
   };
   filteredTracks: TrackType[];
@@ -27,7 +26,7 @@ const initialState: playlistStateType = {
   filterOptions: {
     author: [],
     genre: [],
-    release_date: "",
+    order: "",
     searchValue: "",
   },
   filteredTracks: [],
@@ -93,15 +92,15 @@ const playlistSlice = createSlice({
       action: PayloadAction<{
         author?: string[];
         genre?: string[];
-        release_date?: string;
+        order?: string;
         searchValue?: string;
       }>
     ) => {
       state.filterOptions = {
         genre: action.payload.genre || state.filterOptions.genre,
         author: action.payload.author || state.filterOptions.author,
-        release_date:
-        action.payload.release_date || state.filterOptions.release_date,
+        order:
+        action.payload.order || state.filterOptions.order,
         searchValue:
           action.payload.searchValue || state.filterOptions.searchValue,
       };
@@ -120,7 +119,7 @@ const playlistSlice = createSlice({
         return isAuthors && isGenres && hasSearchValue;
       });
 
-      switch (state.filterOptions.release_date) {
+      switch (state.filterOptions.order) {
         case "Сначала новые":
           filteredArr.sort(
             (a, b) =>
