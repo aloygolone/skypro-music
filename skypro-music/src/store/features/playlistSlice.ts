@@ -101,7 +101,7 @@ const playlistSlice = createSlice({
         genre: action.payload.genre || state.filterOptions.genre,
         author: action.payload.author || state.filterOptions.author,
         release_date:
-        "По умолчанию" || "Сначала новые" || "Сначала старые"|| state.filterOptions.release_date,
+        action.payload.release_date || state.filterOptions.release_date,
         searchValue:
           action.payload.searchValue || state.filterOptions.searchValue,
       };
