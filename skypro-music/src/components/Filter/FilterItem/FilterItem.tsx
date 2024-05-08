@@ -46,19 +46,21 @@ export default function FilterItem({
     if (list === order) {
       dispatch(
         setFilters({
-          [value]: item,
+          [value]: orderList === item ? "По умолчанию" : item,
         })
       );
     }
   };
 
-  if (value !== "order") {useEffect(() => {
-    SetFilterNumber(list.length);
-  }, [list]);}
-
-  if (value === "order") {useEffect(() => {
-    orderList !== "" ? SetFilterNumber(1) : SetFilterNumber(0);
-  }, [orderList]);}
+  useEffect(() => {
+    SetFilterNumber(
+      value === "order"
+        ? orderList === "Сначала новые" || orderList === "Сначала старые"
+          ? 1
+          : 0
+        : list.length
+    );
+  }, [list, orderList, value]);
 
   getFilterList();
   return (
@@ -90,9 +92,7 @@ export default function FilterItem({
                   key={item}
                   className={classNames(styles.listText, {
                     [styles.listTextSelected]:
-                      list === order
-                        ? orderList.includes(item)
-                        : list.includes(item),
+                      list === order ? orderList === item : list.includes(item),
                   })}
                 >
                   {item}

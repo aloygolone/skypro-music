@@ -26,7 +26,7 @@ const initialState: playlistStateType = {
   filterOptions: {
     author: [],
     genre: [],
-    order: "",
+    order: "По умолчанию",
     searchValue: "",
   },
   filteredTracks: [],
@@ -99,8 +99,7 @@ const playlistSlice = createSlice({
       state.filterOptions = {
         genre: action.payload.genre || state.filterOptions.genre,
         author: action.payload.author || state.filterOptions.author,
-        order:
-        action.payload.order || state.filterOptions.order,
+        order: action.payload.order || state.filterOptions.order,
         searchValue:
           action.payload.searchValue || state.filterOptions.searchValue,
       };
@@ -137,6 +136,7 @@ const playlistSlice = createSlice({
           break;
 
         default:
+          filteredArr;
           break;
       }
       state.filteredTracks = filteredArr;
