@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import PlayerControls from "../PlayerControls/PlayerControls";
 import PlayerTrackNow from "../PlayerTrackNow/PlayerTrackNow";
 import ProgressBar from "../ProgressBar/ProgressBar";
@@ -38,7 +38,7 @@ export default function PlayerBar() {
     audio?.addEventListener("ended", handdleEnded);
 
     return () => audio?.removeEventListener("ended", handdleEnded);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, audioRef.current]);
 
   useEffect(() => {
@@ -74,18 +74,18 @@ export default function PlayerBar() {
     setIsLooping((prev) => !prev);
   };
 
-  const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSeek = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
       audioRef.current.currentTime = Number(event.target.value);
     }
-  };
+  }, []);
 
-  const handleVolume = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleVolume = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     if (audioRef.current) {
       audioRef.current.volume = Number(event.target.value);
       setVolume(audioRef.current.volume);
     }
-  };
+  }, []);
 
   return (
     <>

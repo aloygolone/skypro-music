@@ -1,3 +1,8 @@
+.titleFilterBox {
+  display: flex;
+  position: relative;
+}
+
 .filterButton {
   font-style: normal;
   font-weight: 400;
@@ -6,10 +11,23 @@
   border: 1px solid #ffffff;
   border-radius: 60px;
   padding: 6px 20px;
+  margin-right: 10px;
 }
 
-.filterButton:not(:last-child) {
-  margin-right: 10px;
+.filterNumber {
+  position: absolute;
+  right: 0px;
+  bottom: 26px;
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  background: #ad61ff;
+  font-family: "Montserrat";
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 13px;
+  text-align: center;
+  padding: 6px;
 }
 
 .btnText:hover {
@@ -18,11 +36,11 @@
   cursor: pointer;
 }
 
-.btnText:active {
+/* .btnText:active {
   border-color: #ad61ff;
   color: #ad61ff;
   cursor: pointer;
-}
+} */
 
 .activeFilter {
   border-color: #ad61ff;
@@ -60,6 +78,11 @@
   line-height: 24px;
   text-align: left;
   color: #ffffff;
+}
+
+.listTextSelected {
+  text-decoration: underline;
+  color: #b672ff;
 }
 
 .listText:hover {

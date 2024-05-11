@@ -2,9 +2,11 @@ import { ChangeEvent } from "react";
 
 export type FilterItemType = {
   title: string;
-  list: string[];
+  value: "author" | "genre" | "order";
   handleFilterClick: (newFilter: string) => void;
   isOpened: boolean;
+  tracksData: TrackType[];
+  list: string[];
 };
 
 type UserType = {
