@@ -1,7 +1,7 @@
 "use client";
 
 import { TrackType } from "@/types";
-import Filter from "../Filter/Filter";
+
 import PlaylistHeader from "../PlaylistHeader/PlaylistHeader";
 import Track from "../Track/Track";
 import styles from "./CenterBlock.module.css";
