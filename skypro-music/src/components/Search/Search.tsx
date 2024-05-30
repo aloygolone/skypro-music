@@ -9,13 +9,13 @@ export default function Search() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    dispatch(setFilters({searchValue: e.target.value}))
+    dispatch(setFilters({ searchValue: e.target.value }));
   };
 
   return (
     <div className={styles.centerblockSearch}>
       <svg className={styles.searchSvg}>
-        <use xlinkHref="img/icon/sprite.svg#icon-search" />
+        <use xlinkHref="/img/icon/sprite.svg#icon-search" />
       </svg>
       <input
         className={styles.searchText}
