@@ -7,28 +7,43 @@ const login = "login";
 const token = "token";
 const tokenRefresh = "token/refresh";
 
+type SignupType = {
+  email: string;
+  username: string;
+  password: string;
+};
+
+type SigninType = {
+  email: string;
+  password: string;
+};
+
 //Зарегистрироваться
 
-export async function postRegUser({ email, password, username }: UserType) {
-  await fetch(apiUrlUser + signup, {
+export async function postRegUser({ email, password }: SignupType) {
+  const res = await fetch(apiUrlUser + signup, {
     method: "POST",
     body: JSON.stringify({
       email: email,
       password: password,
-      username: username,
+      username: email,
     }),
     headers: {
       "content-type": "application/json",
     },
-  })
-    .then((response) => response.json())
-    .then((json) => console.log(json));
+  });
+  if (!res.ok) {
+    throw new Error("Ошибка");
+  }
+  const data = await res.json();
+  console.log(data);
+  return data;
 }
 
 //Войти
 
-export async function postAuthUser({ email, password }: UserType) {
-  await fetch(apiUrlUser + login, {
+export async function postAuthUser({ email, password }: SigninType) {
+  const res = await fetch(apiUrlUser + login, {
     method: "POST",
     body: JSON.stringify({
       email: email,
@@ -37,15 +52,18 @@ export async function postAuthUser({ email, password }: UserType) {
     headers: {
       "content-type": "application/json",
     },
-  })
-    .then((response) => response.json())
-    .then((json) => console.log(json));
+  });
+  if (!res.ok) {
+    throw new Error("Ошибка");
+  }
+  const data = await res.json();
+  return data;
 }
 
 //Получить токен
 
-export async function postToken({ email, password }: UserType) {
-  await fetch(apiUrlUser + token, {
+export async function postToken({ email, password }: SigninType) {
+  const res = await fetch(apiUrlUser + token, {
     method: "POST",
     body: JSON.stringify({
       email: email,
@@ -54,15 +72,18 @@ export async function postToken({ email, password }: UserType) {
     headers: {
       "content-type": "application/json",
     },
-  })
-    .then((response) => response.json())
-    .then((json) => console.log(json));
+  });
+  if (!res.ok) {
+    throw new Error("Ошибка при получении данных");
+  }
+  const data = await res.json();
+  return data;
 }
 
 //Обновить токен
 
-export async function postRefreshToken({refresh}: UserType) {
-  fetch(apiUrlUser + tokenRefresh, {
+export async function postRefreshToken({ refresh }: UserType) {
+  const res = await fetch(apiUrlUser + tokenRefresh, {
     method: "POST",
     body: JSON.stringify({
       refresh: refresh,
@@ -70,7 +91,10 @@ export async function postRefreshToken({refresh}: UserType) {
     headers: {
       "content-type": "application/json",
     },
-  })
-    .then((response) => response.json())
-    .then((json) => console.log(json));
+  });
+  if (!res.ok) {
+    throw new Error("Ошибка при получении данных");
+  }
+  const data = await res.json();
+  return data;
 }
