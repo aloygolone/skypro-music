@@ -12,6 +12,7 @@ export default function Nav() {
   return (
     <nav className={styles.mainNav}>
       <div className={styles.navLogo}>
+      <Link href="/">
         <Image
           alt="логотип скайпро музыка"
           className={styles.logoImage}
@@ -19,6 +20,7 @@ export default function Nav() {
           width={113}
           height={17}
         />
+      </Link>
       </div>
       <div onClick={toggleMenu} className={styles.navBurger}>
         <span className={styles.burgerLine} />

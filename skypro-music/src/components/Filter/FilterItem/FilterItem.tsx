@@ -14,10 +14,10 @@ export default function FilterItem({
   value,
   isOpened,
   list,
-  tracksData,
 }: FilterItemType) {
   const dispatch = useAppDispatch();
   const [filterNumber, SetFilterNumber] = useState<number>(0);
+  const tracksData = useAppSelector((state) => state.playlist.initialTracks)
 
   const orderList = useAppSelector(
     (state) => state.playlist.filterOptions.order
