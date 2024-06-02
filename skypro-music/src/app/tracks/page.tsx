@@ -1,7 +1,8 @@
-'use client'
+"use client";
 
 import { getTracks } from "@/api/tracks";
 import CenterBlock from "@/components/CenterBlock/CenterBlock";
+import Filter from "@/components/Filter/Filter";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setInitialTracks } from "@/store/features/playlistSlice";
 import { TrackType } from "@/types";
@@ -15,10 +16,19 @@ export default function MainTraksPage() {
   );
 
   useEffect(() => {
-    getTracks().then((tracksData) => {
-      setTracks(tracksData);
-      dispatch(setInitialTracks({ initialTracks: tracksData }));
-    });
+    getTracks()
+      .then((tracksData) => {
+        setTracks(tracksData);
+        dispatch(setInitialTracks({ initialTracks: tracksData }));
+      })
+      .catch((error: any) => {
+        throw new Error(error.message);
+      });
   }, [dispatch]);
-  return <CenterBlock tracks={filteredTracks} playlist={tracks} />;
+  return (
+    <>
+      <Filter />
+      <CenterBlock tracks={filteredTracks} playlist={tracks} isFavorite />
+    </>
+  );
 }

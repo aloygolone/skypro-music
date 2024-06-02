@@ -80,10 +80,6 @@ export default function SignupPage() {
       setIsNotFilled(false);
       console.log(loginData);
       await postRegUser(loginData)
-        .then((data) => {
-          dispatch(setUserData({ username: data.username, email: data.email }));
-          console.log(data);
-        })
         .catch((error) => {
           alert(error);
         });

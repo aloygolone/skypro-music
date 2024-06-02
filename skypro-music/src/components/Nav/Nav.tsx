@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "./Nav.module.css";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { setUserData } from "@/store/features/authSlice";
+import { setAuthState, setUserData } from "@/store/features/authSlice";
 
 export default function Nav() {
   const logged = useAppSelector((state) => state.auth.authState);
@@ -15,7 +15,8 @@ export default function Nav() {
   }
 
   const logout = () => {
-    dispatch(setUserData({ email: "", username: "", refresh: "", access: ""}));
+    dispatch(setAuthState(false));
+    dispatch(setUserData({ email: "", username: "", refresh: "", access: "" }));
   };
   return (
     <nav className={styles.mainNav}>

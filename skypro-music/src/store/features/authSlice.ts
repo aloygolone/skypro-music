@@ -4,6 +4,7 @@ import { useState } from "react";
 type AuthStateType = {
   authState: boolean;
   userData: {
+    id: number;
     email: string;
     username: string;
     refresh: string;
@@ -14,6 +15,7 @@ type AuthStateType = {
 const initialState: AuthStateType = {
   authState: false,
   userData: {
+    id: 0,
     email: "",
     username: "",
     refresh: "",
@@ -35,9 +37,11 @@ const authSlice = createSlice({
         username?: string;
         refresh?: string;
         access?: string;
+        id?: number;
       }>
     ) => {
       state.userData = {
+        id: action.payload.id || state.userData.id,
         email: action.payload.email || state.userData.email,
         username: action.payload.username || state.userData.username,
         refresh: action.payload.refresh || state.userData.refresh,

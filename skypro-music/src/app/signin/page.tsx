@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import styles from "./signin.module.css";
@@ -7,7 +7,7 @@ import classNames from "classnames";
 import { useAppDispatch } from "@/hooks";
 import { useState } from "react";
 import { postAuthUser, postToken } from "@/api/auth_reg_token";
-import { setUserData } from "@/store/features/authSlice";
+import { setAuthState, setUserData } from "@/store/features/authSlice";
 
 type SigninType = {
   email: string;
@@ -33,8 +33,16 @@ export default function SigninPage() {
   const handleSignin = async () => {
     await postAuthUser(loginData)
       .then((data) => {
-        dispatch(setUserData({ username: data.username, email: data.email }));
+        dispatch(setAuthState(true));
+        dispatch(
+          setUserData({
+            username: data.username,
+            email: data.email,
+            id: data.id,
+          })
+        );
         postToken(loginData).then((data) => {
+          
           dispatch(setUserData({ refresh: data.refresh, access: data.access }));
         });
       })

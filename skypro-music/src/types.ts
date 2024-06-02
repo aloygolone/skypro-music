@@ -19,6 +19,7 @@ export type UserType = {
 };
 
 export type TrackType = {
+  isFavorite: boolean;
   id: number;
   name: string;
   author: string;

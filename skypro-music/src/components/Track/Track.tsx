@@ -6,16 +6,23 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlice";
 import classNames from "classnames";
 import { durationFormat } from "@/lib/durationFormat";
-
+import { useEffect, useState } from "react";
+import { setDislike, setLike } from "@/api/likes";
 
 type PlaylistType = {
   track: TrackType;
   tracksData: TrackType[];
+  isFavorite: boolean;
 };
 
-export default function Track({ track, tracksData }: PlaylistType) {
+export default function Track({ track, tracksData, isFavorite }: PlaylistType) {
   const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
+  const userData = useAppSelector((state) => state.auth.userData);
+  const token = useAppSelector((state) => state.auth.userData.access);
+  const isLikedByUser =
+    isFavorite || track.stared_user.find((u) => u.id === userData?.id);
+  const [isLiked, setIsLiked] = useState(!!isLikedByUser);
 
   const { name, author, album, duration_in_seconds, id } = track;
   const isCurrentTrack = currentTrack ? currentTrack.id === id : false;
@@ -23,9 +30,21 @@ export default function Track({ track, tracksData }: PlaylistType) {
   const dispatch = useAppDispatch();
 
   const HandleTrackClick = () => {
-    dispatch(setCurrentTrack({ track, tracksData }));
+    dispatch(setCurrentTrack({ track: { ...track, isFavorite }, tracksData }));
     dispatch(setIsPlaying(true));
   };
+
+  const handleLikeClick = () => {
+    isLiked ? setDislike(token, id) : setLike(token, id);
+    setIsLiked(!isLiked);
+  };
+
+  useEffect(() => {
+    const isLikedByUser =
+      isFavorite || track.stared_user.find((u) => u.id === userData?.id);
+
+    setIsLiked(!!isLikedByUser);
+  }, [track, isFavorite, userData]);
 
   return (
     <div onClick={HandleTrackClick} className={styles.playlistItem}>
@@ -50,15 +69,17 @@ export default function Track({ track, tracksData }: PlaylistType) {
             </span>
           </div>
         </div>
-        <div className={styles.trackAuthor}>
+        <div onClick={HandleTrackClick} className={styles.trackAuthor}>
           <span className={styles.trackAuthorLink}>{author}</span>
         </div>
-        <div className={styles.trackAlbum}>
+        <div onClick={HandleTrackClick} className={styles.trackAlbum}>
           <span className={styles.trackAlbumLink}>{album}</span>
         </div>
-        <div className={styles.trackTime}>
+        <div onClick={handleLikeClick} className={styles.trackTime}>
           <svg className={styles.trackTimeSvg}>
-            <use xlinkHref="/img/icon/sprite.svg#icon-like" />
+            <use xlinkHref={`/img/icon/sprite.svg#${
+                isLiked ? "icon-like-active" : "icon-like"
+              }`} />
           </svg>
           <span className={styles.trackTimeText}>
             {durationFormat(duration_in_seconds)}
