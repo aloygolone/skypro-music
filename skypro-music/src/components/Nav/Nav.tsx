@@ -40,14 +40,14 @@ export default function Nav() {
         <div className={styles.navMenu}>
           <ul className={styles.menuList}>
             <li className={styles.menuItem}>
-              <a href="#" className={styles.menuLink}>
+              <Link href="/" className={styles.menuLink}>
                 Главное
-              </a>
+              </Link>
             </li>
             <li className={styles.menuItem}>
-              <a href="#" className={styles.menuLink}>
+              <Link href="/tracks/favorite" className={styles.menuLink}>
                 Мой плейлист
-              </a>
+              </Link>
             </li>
             <li className={styles.menuItem}>
               {logged ? (

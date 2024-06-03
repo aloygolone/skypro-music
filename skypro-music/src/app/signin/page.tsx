@@ -41,8 +41,9 @@ export default function SigninPage() {
             id: data.id,
           })
         );
+        localStorage.setItem("user", JSON.stringify(data.email));
         postToken(loginData).then((data) => {
-          
+          localStorage.setItem("token", JSON.stringify(data.access));
           dispatch(setUserData({ refresh: data.refresh, access: data.access }));
         });
       })

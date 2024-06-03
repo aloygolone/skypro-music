@@ -10,7 +10,7 @@ const tokenRefresh = "token/refresh/";
 type SignupType = {
   email: string;
   username: string;
-  password: string;
+  passwordfirst: string;
 };
 
 type SigninType = {
@@ -20,12 +20,12 @@ type SigninType = {
 
 //Зарегистрироваться
 
-export async function postRegUser({ email, password }: SignupType) {
-  const res = await fetch("https://skypro-music-api.skyeng.tech/user/signup/", {
+export async function postRegUser({ email, passwordfirst }: SignupType) {
+  const res = await fetch(apiUrlUser + signup, {
     method: "POST",
     body: JSON.stringify({
       email: email,
-      password: password,
+      password: passwordfirst,
       username: email,
     }),
     headers: {
@@ -36,14 +36,14 @@ export async function postRegUser({ email, password }: SignupType) {
     throw new Error("Ошибка");
   }
   const data = await res.json();
-  console.log(data);
+
   return data;
 }
 
 //Войти
 
 export async function postAuthUser({ email, password }: SigninType) {
-  const res = await fetch("https://skypro-music-api.skyeng.tech/user/login/", {
+  const res = await fetch(apiUrlUser + login, {
     method: "POST",
     body: JSON.stringify({
       email: email,

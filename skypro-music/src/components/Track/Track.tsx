@@ -20,8 +20,7 @@ export default function Track({ track, tracksData, isFavorite }: PlaylistType) {
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
   const userData = useAppSelector((state) => state.auth.userData);
   const token = useAppSelector((state) => state.auth.userData.access);
-  const isLikedByUser =
-    isFavorite || track.stared_user.find((u) => u.id === userData?.id);
+  const isLikedByUser = isFavorite && track.stared_user.find((u) => u.id === userData?.id);
   const [isLiked, setIsLiked] = useState(!!isLikedByUser);
 
   const { name, author, album, duration_in_seconds, id } = track;
@@ -40,17 +39,14 @@ export default function Track({ track, tracksData, isFavorite }: PlaylistType) {
   };
 
   useEffect(() => {
-    const isLikedByUser =
-      isFavorite || track.stared_user.find((u) => u.id === userData?.id);
-
     setIsLiked(!!isLikedByUser);
-  }, [track, isFavorite, userData]);
+  }, [track, isFavorite, userData, isLikedByUser]);
 
   return (
-    <div onClick={HandleTrackClick} className={styles.playlistItem}>
+    <div className={styles.playlistItem}>
       <div className={styles.playlistTrack}>
         <div className={styles.trackTitle}>
-          <div className={styles.trackTitleImage}>
+          <div onClick={HandleTrackClick} className={styles.trackTitleImage}>
             <svg
               className={classNames(styles.trackTitleSvg, {
                 [styles.trackTitleSvgPlaying]: isPlaying && isCurrentTrack,
@@ -69,17 +65,19 @@ export default function Track({ track, tracksData, isFavorite }: PlaylistType) {
             </span>
           </div>
         </div>
-        <div onClick={HandleTrackClick} className={styles.trackAuthor}>
+        <div className={styles.trackAuthor}>
           <span className={styles.trackAuthorLink}>{author}</span>
         </div>
-        <div onClick={HandleTrackClick} className={styles.trackAlbum}>
+        <div className={styles.trackAlbum}>
           <span className={styles.trackAlbumLink}>{album}</span>
         </div>
         <div onClick={handleLikeClick} className={styles.trackTime}>
           <svg className={styles.trackTimeSvg}>
-            <use xlinkHref={`/img/icon/sprite.svg#${
+            <use
+              xlinkHref={`/img/icon/sprite.svg#${
                 isLiked ? "icon-like-active" : "icon-like"
-              }`} />
+              }`}
+            />
           </svg>
           <span className={styles.trackTimeText}>
             {durationFormat(duration_in_seconds)}

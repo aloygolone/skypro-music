@@ -9,16 +9,17 @@ import { UserType } from "@/types";
 import { postRegUser } from "@/api/auth_reg_token";
 import { useAppDispatch } from "@/hooks";
 import { setUserData } from "@/store/features/authSlice";
+import { useRouter } from "next/navigation";
 
 type SignupType = {
   email: string;
   username: string;
-  password: string;
-  password_repeat: string;
+  passwordfirst: string;
+  passwordrepeat: string;
 };
 
 export default function SignupPage() {
-  const dispatch = useAppDispatch();
+  const router = useRouter();
   const [emailActive, setEmailActive] = useState<boolean>(false);
   const [passwordActive, setPasswordActive] = useState<boolean>(false);
   const [passwordCorrect, setPasswordCorrect] = useState<boolean>(false);
@@ -27,8 +28,8 @@ export default function SignupPage() {
   const [loginData, setLoginData] = useState<SignupType>({
     email: "",
     username: "",
-    password: "",
-    password_repeat: "",
+    passwordfirst: "",
+    passwordrepeat: "",
   });
 
   const hanleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,21 +66,26 @@ export default function SignupPage() {
   const handleSignup = async (event: any) => {
     event.preventDefault();
     setIsSubmitted(true);
+    console.log(loginData);
     if (
       loginData.email === "" ||
-      (loginData.password === "" && loginData.password.length < 8) ||
-      loginData.password_repeat === ""
+      (loginData.passwordfirst === "" && loginData.passwordfirst.length < 8) ||
+      loginData.passwordrepeat === ""
     ) {
       setIsNotFilled(true);
       return;
     }
     if (
       loginData.email !== "" &&
-      loginData.password === loginData.password_repeat
+      loginData.passwordfirst === loginData.passwordrepeat
     ) {
       setIsNotFilled(false);
-      console.log(loginData);
+    }
+    if (!isNotFilled) {
       await postRegUser(loginData)
+        .then(() => {
+          router.push("/signin");
+        })
         .catch((error) => {
           alert(error);
         });
@@ -135,17 +141,14 @@ export default function SignupPage() {
               ""
             )}
             <input
+              onChange={hanleInputChange}
               className={styles.modalInput}
               type="password"
               name="passwordrepeat"
               placeholder="Повторите пароль"
             />
             <button onClick={handleSignup} className={styles.modalBtnSignupEnt}>
-              {isNotFilled ? (
-                <a>Зарегистрироваться</a>
-              ) : (
-                <Link href="/signin">Зарегистрироваться</Link>
-              )}
+              <a>Зарегистрироваться</a>
             </button>
             {isNotFilled && isSubmitted ? (
               <div className={styles.notFilled}>Нужно заполнить все поля</div>

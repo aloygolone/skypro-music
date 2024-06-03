@@ -1,3 +1,4 @@
+import { getValueFromLocalStorage } from "@/lib/getValueFromLS";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { useState } from "react";
 
@@ -42,10 +43,10 @@ const authSlice = createSlice({
     ) => {
       state.userData = {
         id: action.payload.id || state.userData.id,
-        email: action.payload.email || state.userData.email,
+        email: action.payload.email || state.userData.email || getValueFromLocalStorage("user"),
         username: action.payload.username || state.userData.username,
         refresh: action.payload.refresh || state.userData.refresh,
-        access: action.payload.access || state.userData.access,
+        access: action.payload.access || state.userData.access || getValueFromLocalStorage("token"),
       };
     },
   },
