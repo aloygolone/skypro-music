@@ -15,7 +15,7 @@ import {
   TitleSkeleton,
 } from "../SkeletonBlocks/SkeletonBlocks";
 import { useRouter } from "next/navigation";
-import { setUserData } from "@/store/features/authSlice";
+import { setAuthState, setUserData } from "@/store/features/authSlice";
 
 type PlaylistType = {
   track: TrackType;
@@ -43,6 +43,13 @@ export default function Track({
 
   const dispatch = useAppDispatch();
 
+  const logout = () => {
+    dispatch(setAuthState(false));
+    dispatch(setUserData(null));
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+  };
+
   const HandleTrackClick = () => {
     dispatch(setCurrentTrack({ track: { ...track, isFavorite }, tracksData }));
     dispatch(setIsPlaying(true));
@@ -56,10 +63,7 @@ export default function Track({
             if (error) {
               const errorData = JSON.parse(error.message);
               if (errorData.status === 401) {
-                
-                dispatch(setUserData(null));
-                localStorage.removeItem("user");
-                localStorage.removeItem("token");
+                logout();
                 router.push("/signin");
               }
             }
@@ -70,9 +74,7 @@ export default function Track({
             if (error) {
               const errorData = JSON.parse(error.message);
               if (errorData.status === 401) {
-                dispatch(setUserData(null));
-                localStorage.removeItem("user");
-                localStorage.removeItem("token");
+                logout();
                 router.push("/signin");
               }
             }
