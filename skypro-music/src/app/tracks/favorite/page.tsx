@@ -11,12 +11,13 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function FavoriteTracksPage() {
+  const token = useAppSelector((state) => state.auth.userData.access);
+  console.log(token);
   const [tracksData, setTracksData] = useState<TrackType[]>([]);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const token = getValueFromLocalStorage("token");
     getFavoritesTracks(token)
       .then((data) => {
         setTracksData(data);
@@ -29,7 +30,7 @@ export default function FavoriteTracksPage() {
           alert(error.message);
         }
       });
-  }, [dispatch, router]);
+  }, [dispatch, router, token]);
 
   return (
     <CenterBlock tracks={tracksData} playlist={tracksData} isFavorite={true} />

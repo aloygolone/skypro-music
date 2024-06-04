@@ -20,10 +20,12 @@ export default function Track({ track, tracksData, isFavorite }: PlaylistType) {
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
   const userData = useAppSelector((state) => state.auth.userData);
   const token = useAppSelector((state) => state.auth.userData.access);
-  const isLikedByUser = isFavorite && track.stared_user.find((u) => u.id === userData?.id);
+  const { name, author, album, duration_in_seconds, id, stared_user } = track;
+  console.log(track)
+  const isLikedByUser = isFavorite || stared_user.find((u) => u.id === userData?.id);
   const [isLiked, setIsLiked] = useState(!!isLikedByUser);
 
-  const { name, author, album, duration_in_seconds, id } = track;
+  
   const isCurrentTrack = currentTrack ? currentTrack.id === id : false;
 
   const dispatch = useAppDispatch();
