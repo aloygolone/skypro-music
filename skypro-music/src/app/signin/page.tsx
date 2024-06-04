@@ -37,7 +37,6 @@ export default function SigninPage() {
     await postAuthUser(loginData)
       .then((data) => {
         dispatch(setAuthState(true));
-        console.log(data);
         dispatch(
           setUserData({
             username: data.username,
