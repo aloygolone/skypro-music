@@ -147,7 +147,7 @@ export default function SignupPage() {
               <a>Зарегистрироваться</a>
             </button>
             {isNotFilled && isSubmitted ? (
-              <div className={styles.notFilled}>Нужно заполнить все поля</div>
+              <div className={styles.notFilled}>Нужно заполнить все поля корректно</div>
             ) : (
               ""
             )}
