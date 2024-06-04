@@ -16,14 +16,10 @@ export default function PlayerTrackNow({ track }: PlayerTrackNowType) {
           </svg>
         </div>
         <div className={styles.trackPlayAuthor}>
-          <span className={styles.trackPlayAuthorLink} >
-            {track.name}
-          </span>
+          <span className={styles.trackPlayAuthorLink}>{track.name}</span>
         </div>
         <div className={styles.trackPlayAlbum}>
-          <span className={styles.trackPlayAlbumLink} >
-            {track.author}
-          </span>
+          <span className={styles.trackPlayAlbumLink}>{track.author}</span>
         </div>
       </div>
       <div className={styles.trackPlayLikeDis}>

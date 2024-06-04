@@ -1,0 +1,48 @@
+.notesSkel {
+  width: 51px;
+  height: 51px;
+  opacity: 0px;
+  background: #313131;
+}
+
+.singerSongBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  justify-content: center;
+}
+
+.skeleton {
+  width: 59px;
+  height: 15px;
+  opacity: 0px;
+  background: #313131;
+}
+
+.titleSkel {
+  width: 356px;
+  height: 19px;
+  opacity: 0px;
+  background: #313131;
+}
+
+.authorSkel {
+  width: 271px;
+  height: 19px;
+  opacity: 0px;
+  background: #313131;
+}
+
+.albumSkel {
+  width: 305px;
+  height: 19px;
+  opacity: 0px;
+  background: #313131;
+}
+
+.playlistSkel {
+  width: 250px;
+  height: 150px;
+  opacity: 0px;
+  background: #313131;
+}

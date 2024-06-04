@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 
 export default function FavoriteTracksPage() {
   const token = useAppSelector((state) => state.auth.userData.access);
-  console.log(token);
   const [tracksData, setTracksData] = useState<TrackType[]>([]);
   const router = useRouter();
   const dispatch = useAppDispatch();

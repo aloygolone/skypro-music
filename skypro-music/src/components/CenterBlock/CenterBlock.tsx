@@ -10,10 +10,12 @@ export default function CenterBlock({
   tracks,
   playlist,
   isFavorite,
+  isLoading,
 }: {
   tracks: TrackType[];
   playlist: TrackType[];
-  isFavorite: boolean;
+  isFavorite?: boolean;
+  isLoading: boolean;
 }) {
   return (
     <>
@@ -23,7 +25,13 @@ export default function CenterBlock({
           ? "Нет треков, удовлетворяющих условиям фильтра"
           : ""}
         {tracks?.map((track) => (
-          <Track key={track.id} track={track} tracksData={playlist} isFavorite={isFavorite} />
+          <Track
+            key={track.id}
+            track={track}
+            tracksData={playlist}
+            isFavorite={isFavorite}
+            isLoading={isLoading}
+          />
         ))}
       </div>
     </>

@@ -3,12 +3,9 @@
 import Image from "next/image";
 import styles from "./signup.module.css";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import classNames from "classnames";
-import { UserType } from "@/types";
 import { postRegUser } from "@/api/auth_reg_token";
-import { useAppDispatch } from "@/hooks";
-import { setUserData } from "@/store/features/authSlice";
 import { useRouter } from "next/navigation";
 
 type SignupType = {
@@ -66,7 +63,6 @@ export default function SignupPage() {
   const handleSignup = async (event: any) => {
     event.preventDefault();
     setIsSubmitted(true);
-    console.log(loginData);
     if (
       loginData.email === "" ||
       (loginData.passwordfirst === "" && loginData.passwordfirst.length < 8) ||

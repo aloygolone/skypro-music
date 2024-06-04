@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { setIsPlaying, setNextTrack } from "@/store/features/playlistSlice";
 import { durationFormat } from "@/lib/durationFormat";
 
+
+
 export default function PlayerBar() {
   const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);

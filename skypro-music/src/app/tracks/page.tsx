@@ -9,6 +9,7 @@ import { TrackType } from "@/types";
 import { useEffect, useState } from "react";
 
 export default function MainTraksPage() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const [tracks, setTracks] = useState<TrackType[]>([]);
   const filteredTracks = useAppSelector(
@@ -20,6 +21,9 @@ export default function MainTraksPage() {
       .then((tracksData) => {
         setTracks(tracksData);
         dispatch(setInitialTracks({ initialTracks: tracksData }));
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
       })
       .catch((error: any) => {
         throw new Error(error.message);
@@ -28,7 +32,7 @@ export default function MainTraksPage() {
   return (
     <>
       <Filter />
-      <CenterBlock tracks={filteredTracks} playlist={tracks} isFavorite />
+      <CenterBlock isLoading={isLoading} tracks={filteredTracks} playlist={tracks} />
     </>
   );
 }
