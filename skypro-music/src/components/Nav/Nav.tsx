@@ -16,7 +16,9 @@ export default function Nav() {
 
   const logout = () => {
     dispatch(setAuthState(false));
-    dispatch(setUserData({ email: "", username: "", refresh: "", access: "" }));
+    dispatch(setUserData(null));
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   };
   return (
     <nav className={styles.mainNav}>

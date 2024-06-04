@@ -9,5 +9,5 @@ type CategoryType = {
 export default async function CategoryPage({ params }: CategoryType) {
   const tracksData = await getPlaylist(params.id);
 
-  return <CenterBlock tracks={tracksData} playlist={tracksData} isFavorite />;
+  return <CenterBlock tracks={tracksData} playlist={tracksData} />;
 }

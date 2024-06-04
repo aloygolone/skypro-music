@@ -13,15 +13,18 @@ type AuthStateType = {
   };
 };
 
+function checkLSAuth(key: string) {
+  try {
+    const data = JSON.parse(localStorage.getItem(key) || "");
+    return data || null;
+  } catch (error) {
+    return null;
+  }
+}
+
 const initialState: AuthStateType = {
-  authState: false,
-  userData: {
-    id: 0,
-    email: "",
-    username: "",
-    refresh: "",
-    access: "",
-  },
+  authState: !!checkLSAuth("user"),
+  userData: checkLSAuth("user"),
 };
 
 const authSlice = createSlice({
@@ -39,14 +42,20 @@ const authSlice = createSlice({
         refresh?: string;
         access?: string;
         id?: number;
-      }>
+      } | null>
     ) => {
       state.userData = {
-        id: action.payload.id || state.userData.id,
-        email: action.payload.email || state.userData.email || getValueFromLocalStorage("user"),
-        username: action.payload.username || state.userData.username,
-        refresh: action.payload.refresh || state.userData.refresh,
-        access: action.payload.access || state.userData.access || getValueFromLocalStorage("token"),
+        id: action.payload?.id || state.userData.id,
+        email:
+          action.payload?.email ||
+          state.userData.email ||
+          getValueFromLocalStorage("user"),
+        username: action.payload?.username || state.userData.username,
+        refresh: action.payload?.refresh || state.userData?.refresh || "",
+        access:
+          action.payload?.access ||
+          state.userData?.access ||
+          getValueFromLocalStorage("token"),
       };
     },
   },

@@ -14,12 +14,14 @@ import {
   NotesSkeleton,
   TitleSkeleton,
 } from "../SkeletonBlocks/SkeletonBlocks";
+import { useRouter } from "next/navigation";
+import { setUserData } from "@/store/features/authSlice";
 
 type PlaylistType = {
   track: TrackType;
   tracksData: TrackType[];
   isFavorite?: boolean;
-  isLoading: boolean;
+  isLoading?: boolean;
 };
 
 export default function Track({
@@ -31,11 +33,11 @@ export default function Track({
   const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
   const userData = useAppSelector((state) => state.auth.userData);
-  const token = useAppSelector((state) => state.auth.userData.access);
   const { name, author, album, duration_in_seconds, id, stared_user } = track;
   const isLikedByUser =
     isFavorite || stared_user.find((u) => u.id === userData?.id);
   const [isLiked, setIsLiked] = useState(!!isLikedByUser);
+  const router = useRouter();
 
   const isCurrentTrack = currentTrack ? currentTrack.id === id : false;
 
@@ -47,7 +49,34 @@ export default function Track({
   };
 
   const handleLikeClick = () => {
-    isLiked ? setDislike(token, id) : setLike(token, id);
+    isLiked
+      ? setDislike(userData?.access, id)
+          .then(() => {})
+          .catch((error) => {
+            if (error) {
+              const errorData = JSON.parse(error.message);
+              if (errorData.status === 401) {
+                
+                dispatch(setUserData(null));
+                localStorage.removeItem("user");
+                localStorage.removeItem("token");
+                router.push("/signin");
+              }
+            }
+          })
+      : setLike(userData?.access, id)
+          .then(() => {})
+          .catch((error) => {
+            if (error) {
+              const errorData = JSON.parse(error.message);
+              if (errorData.status === 401) {
+                dispatch(setUserData(null));
+                localStorage.removeItem("user");
+                localStorage.removeItem("token");
+                router.push("/signin");
+              }
+            }
+          });
     setIsLiked(!isLiked);
   };
 

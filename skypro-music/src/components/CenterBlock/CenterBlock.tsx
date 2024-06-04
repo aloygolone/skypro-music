@@ -15,7 +15,7 @@ export default function CenterBlock({
   tracks: TrackType[];
   playlist: TrackType[];
   isFavorite?: boolean;
-  isLoading: boolean;
+  isLoading?: boolean;
 }) {
   return (
     <>

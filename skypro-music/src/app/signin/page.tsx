@@ -34,6 +34,7 @@ export default function SigninPage() {
     await postAuthUser(loginData)
       .then((data) => {
         dispatch(setAuthState(true));
+        console.log(data)
         dispatch(
           setUserData({
             username: data.username,
@@ -41,7 +42,8 @@ export default function SigninPage() {
             id: data.id,
           })
         );
-        localStorage.setItem("user", JSON.stringify(data.email));
+        
+        localStorage.setItem("user", JSON.stringify(data));
         postToken(loginData).then((data) => {
           localStorage.setItem("token", JSON.stringify(data.access));
           dispatch(setUserData({ refresh: data.refresh, access: data.access }));

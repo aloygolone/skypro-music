@@ -1,6 +1,12 @@
+import dynamic from "next/dynamic";
 import SideBarPlaylists from "../SideBarPlaylists/SideBarPlaylist";
-import UserSideBar from "../UserSideBar/UserSideBar";
+// import UserSideBar from "../UserSideBar/UserSideBar";
 import styles from "./MainSideBar.module.css";
+
+const UserSideBar = dynamic(() => import ("@/components/UserSideBar/UserSideBar"), {
+  ssr: false
+})
+
 
 type MainSideBarType = {
   isLoading: boolean
