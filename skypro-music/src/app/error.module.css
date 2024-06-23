@@ -1,0 +1,105 @@
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background-color: #383838;
+}
+
+.container {
+  max-width: 1920px;
+  height: 100vh;
+  margin: 0 auto;
+  position: relative;
+  background-color: #181818;
+}
+
+.main {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.mainCenterblock {
+  width: auto;
+  -webkit-box-flex: 3;
+  -ms-flex-positive: 3;
+  flex-grow: 3;
+  padding: 20px 40px 20px 111px;
+  overflow-y: auto;
+}
+
+.modalBtnSignupEnt:hover {
+  background-color: #3f007d;
+}
+
+.modalBtnSignupEnt:active {
+  background-color: #271a58;
+}
+
+.modalBtnSignupEnt {
+  width: 278px;
+  height: 62px;
+  background-color: #580ea2;
+  border-radius: 6px;
+  margin-left: 4px;
+  border: none;
+  margin-top: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.center404block {
+  height: 431px;
+  width: 366px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.txt404 {
+  font-size: 160px;
+  font-weight: 400;
+  line-height: 168px;
+  color: #ffffff;
+}
+
+.notFoundBlock {
+  display: flex;
+  gap: 8px;
+}
+
+.txtNotFound {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+  color: #ffffff;
+}
+
+.txtExplanation {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.003em;
+  color: #4e4e4e;
+}
+
+.smileCrying {
+  width: 52px;
+  height: 52px;
+  fill: transparent;
+}

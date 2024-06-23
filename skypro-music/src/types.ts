@@ -8,15 +8,18 @@ export type FilterItemType = {
   list: string[];
 };
 
-type UserType = {
+export type UserType = {
   id: number;
   username: string;
   first_name: string;
   last_name: string;
   email: string;
+  password: string;
+  refresh: string;
 };
 
 export type TrackType = {
+  isFavorite?: boolean;
   id: number;
   name: string;
   author: string;

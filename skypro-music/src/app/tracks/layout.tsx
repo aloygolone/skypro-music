@@ -5,13 +5,18 @@ import Nav from "@/components/Nav/Nav";
 import PlayerBar from "@/components/PlayerBar/PlayerBar";
 import styles from "./layout.module.css";
 import Search from "@/components/Search/Search";
-import Filter from "@/components/Filter/Filter";
+import { useState } from "react";
 
 export default function TracksLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 3500);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -20,14 +25,11 @@ export default function TracksLayout({
           <div className={styles.mainCenterblock}>
             <Search />
             <h2 className={styles.centerblockH2}>Треки</h2>
-            <div className={styles.centerblockContent}>
-              <Filter />
-              {children}
-            </div>
+            <div className={styles.centerblockContent}>{children}</div>
           </div>
-          <MainSideBar />
+          <MainSideBar isLoading={isLoading}/>
         </main>
-        <PlayerBar />
+        <PlayerBar/>
         <footer className="footer" />
       </div>
     </div>
