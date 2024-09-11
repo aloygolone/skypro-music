@@ -26,7 +26,7 @@ export default function CenterBlock({
           : ""}
         {tracks?.map((track) => (
           <Track
-            key={track.id}
+            key={track._id}
             track={track}
             tracksData={playlist}
             isFavorite={isFavorite}
