@@ -29,7 +29,7 @@ export type TrackType = {
   album: string;
   logo: string | null;
   track_file: string;
-  stared_user: UserType[];
+  stared_user: string[];
   onClick: () => void;
 };
 

@@ -34,8 +34,9 @@ export default function Track({
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
   const userData = useAppSelector((state) => state.auth.userData);
   const { name, author, album, duration_in_seconds, id, stared_user } = track;
+  console.log(stared_user);
   const isLikedByUser =
-    isFavorite || stared_user.find((u) => u.id === userData?.id);
+    isFavorite || stared_user?.find((u) => u === String(userData?.id));
   const [isLiked, setIsLiked] = useState(!!isLikedByUser);
   const router = useRouter();
 

@@ -41,7 +41,7 @@ export default function SigninPage() {
           setUserData({
             username: data.username,
             email: data.email,
-            id: data.id,
+            id: data._id,
           })
         );
 

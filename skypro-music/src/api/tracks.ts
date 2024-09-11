@@ -10,7 +10,8 @@ export async function getTracks() {
     throw new Error("Ошибка при получении данных");
   }
 
-  return res.json();
+  const data = await res.json();
+  return data.data;
 }
 
 export async function getPlaylist(id: string) {
@@ -21,7 +22,7 @@ export async function getPlaylist(id: string) {
   }
 
   const data = await res.json();
-  return data.items;
+  return data.data.items;
 }
 
 export async function getFavoritesTracks(token: string) {
@@ -39,5 +40,5 @@ export async function getFavoritesTracks(token: string) {
     throw new Error(JSON.stringify(res.status));
   }
   const data = await res.json();
-  return data;
+  return data.data;
 }
