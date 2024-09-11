@@ -1,6 +1,6 @@
 export async function setLike(token: string, id: number) {
   const res = await fetch(
-    `https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`,
+    `https://webdev-music-003b5b991590.herokuapp.com/catalog/track/${id}/favorite/`,
     {
       method: "POST",
       headers: {
@@ -19,7 +19,7 @@ export async function setLike(token: string, id: number) {
 
 export async function setDislike(token: string, id: number) {
   const res = await fetch(
-    `https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`,
+    `https://webdev-music-003b5b991590.herokuapp.com/catalog/track/${id}/favorite/`,
     {
       method: "DELETE",
       headers: {

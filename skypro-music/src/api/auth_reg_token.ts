@@ -1,6 +1,6 @@
 import { UserType } from "@/types";
 
-const apiUrlUser = "https://skypro-music-api.skyeng.tech/user/";
+const apiUrlUser = "https://webdev-music-003b5b991590.herokuapp.com/user/";
 
 const signup = "signup/";
 const login = "login/";
