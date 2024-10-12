@@ -1,7 +1,7 @@
 const apiUrlAllTracks =
-  "https://skypro-music-api.skyeng.tech/catalog/track/all/";
+  "https://webdev-music-003b5b991590.herokuapp.com/catalog/track/all/";
 const apiUrlPlaylist =
-  "https://skypro-music-api.skyeng.tech/catalog/selection/";
+  "https://webdev-music-003b5b991590.herokuapp.com/catalog/selection/";
 
 export async function getTracks() {
   const res = await fetch(apiUrlAllTracks);
@@ -10,7 +10,8 @@ export async function getTracks() {
     throw new Error("Ошибка при получении данных");
   }
 
-  return res.json();
+  const data = await res.json();
+  return data.data;
 }
 
 export async function getPlaylist(id: string) {
@@ -21,12 +22,12 @@ export async function getPlaylist(id: string) {
   }
 
   const data = await res.json();
-  return data.items;
+  return data.data.items;
 }
 
 export async function getFavoritesTracks(token: string) {
   const res = await fetch(
-    "https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/",
+    "https://webdev-music-003b5b991590.herokuapp.com/catalog/track/favorite/all/",
     {
       method: "GET",
       headers: {
@@ -39,5 +40,5 @@ export async function getFavoritesTracks(token: string) {
     throw new Error(JSON.stringify(res.status));
   }
   const data = await res.json();
-  return data;
+  return data.data;
 }

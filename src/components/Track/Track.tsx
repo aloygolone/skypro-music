@@ -33,13 +33,14 @@ export default function Track({
   const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
   const userData = useAppSelector((state) => state.auth.userData);
-  const { name, author, album, duration_in_seconds, id, stared_user } = track;
+  const { name, author, album, duration_in_seconds, _id, stared_user } = track;
+  console.log(stared_user);
   const isLikedByUser =
-    isFavorite || stared_user.find((u) => u.id === userData?.id);
+    isFavorite || stared_user?.find((u) => u === String(userData?.id));
   const [isLiked, setIsLiked] = useState(!!isLikedByUser);
   const router = useRouter();
 
-  const isCurrentTrack = currentTrack ? currentTrack.id === id : false;
+  const isCurrentTrack = currentTrack ? currentTrack._id === _id : false;
 
   const dispatch = useAppDispatch();
 
@@ -57,7 +58,7 @@ export default function Track({
 
   const handleLikeClick = () => {
     isLiked
-      ? setDislike(userData?.access, id)
+      ? setDislike(userData?.access, _id)
           .then(() => {})
           .catch((error) => {
             if (error) {
@@ -68,7 +69,7 @@ export default function Track({
               }
             }
           })
-      : setLike(userData?.access, id)
+      : setLike(userData?.access, _id)
           .then(() => {})
           .catch((error) => {
             if (error) {

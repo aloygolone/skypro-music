@@ -20,7 +20,7 @@ export type UserType = {
 
 export type TrackType = {
   isFavorite?: boolean;
-  id: number;
+  _id: number;
   name: string;
   author: string;
   release_date: string;
@@ -29,7 +29,7 @@ export type TrackType = {
   album: string;
   logo: string | null;
   track_file: string;
-  stared_user: UserType[];
+  stared_user: string[];
   onClick: () => void;
 };
 
